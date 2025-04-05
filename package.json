@@ -1,0 +1,15 @@
+{
+    "name": "studybuddy-server",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.18.2",
+        "jsonwebtoken": "^8.5.1",
+        "mongodb": "^6.15.0",
+        "mongoose": "^6.9.1"
+    },
+    "scripts": {
+        "start": "node index.js"
+    }
+}
