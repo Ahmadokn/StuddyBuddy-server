@@ -51,8 +51,7 @@ jobs:
         with:
           name: node-app
 
-      # Optionally list files for debugging
-      - name: List files
+      - name: List files for debugging
         run: ls -la
 
       - name: Login to Azure
@@ -61,6 +60,9 @@ jobs:
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BCD8AED222074ED8BDAE6C68930C250A }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B2A5128A87594205BDB4B98561A6BC53 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5E46A1C79E0448879E3293863A70AEDF }}
+
+      - name: Wait for a short period before deploying
+        run: sleep 30
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
