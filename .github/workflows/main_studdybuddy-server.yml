@@ -61,4 +61,4 @@ jobs:
           app-name: 'StuddyBuddy-server'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1C5CD7107AAA4B20912B900C664EDFFE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_532AB245BAE44275A9357EE422BBB460 }}
