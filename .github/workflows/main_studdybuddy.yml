@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy Node.js app to Azure Web App - StuddyBuddy
 
 on:
@@ -10,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -27,8 +30,8 @@ jobs:
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: zip -r release.zip ./*
-      
+        run: zip release.zip ./* -r
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -42,8 +45,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write
-      contents: read
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -51,18 +54,15 @@ jobs:
         with:
           name: node-app
 
-      - name: List files for debugging
-        run: ls -la
-
+      - name: Unzip artifact for deployment
+        run: unzip release.zip
+      
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_BCD8AED222074ED8BDAE6C68930C250A }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B2A5128A87594205BDB4B98561A6BC53 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5E46A1C79E0448879E3293863A70AEDF }}
-
-      - name: Wait for a short period before deploying
-        run: sleep 30
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_FBFE483DF13F4930A94A8D08A01B10F6 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3F1FD48659C6425382B55EEDF8693719 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F0BD0BB4C739452096CEA6CC0C591775 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
@@ -70,4 +70,5 @@ jobs:
         with:
           app-name: 'StuddyBuddy'
           slot-name: 'Production'
-          package: release.zip
+          package: .
+          
