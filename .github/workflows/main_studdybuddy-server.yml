@@ -44,10 +44,7 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
-
+    
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
@@ -57,13 +54,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_1DEEA33DEF394354BCBD1F72D27F6F39 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2C1618F99F62499388807EE23E1AD611 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_D5B03A40DC034AC0A25FCB0821672A8E }}
-
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
@@ -71,4 +61,4 @@ jobs:
           app-name: 'StuddyBuddy-server'
           slot-name: 'Production'
           package: .
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1C5CD7107AAA4B20912B900C664EDFFE }}
